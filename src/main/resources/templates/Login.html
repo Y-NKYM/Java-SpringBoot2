@@ -6,6 +6,7 @@
 </head>
 <body>
 	<h2>ログイン画面だよ</h2>
+	<span style="color:red;" th:text="${msg}"></span>
 	<form th:action="@{/login}" method="post" th:object="${loginForm}">
 		<div>
 			<label for="loginId">ログインID</label>
