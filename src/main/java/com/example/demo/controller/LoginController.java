@@ -7,13 +7,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.form.LoginForm;
+import com.example.demo.service.LoginService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/login")
 public class LoginController {
 	
-	private static final String LOGIN_ID="user";
-	private static final String PASSWORD="pass";
+//	private static final String LOGIN_ID="user";
+//	private static final String PASSWORD="pass";
+	private final LoginService service;
 	
 	@GetMapping()
 	public String view(Model model, LoginForm form) {
@@ -23,11 +28,17 @@ public class LoginController {
 	@PostMapping()
 	public String login(Model model, LoginForm form) {
 		System.out.println(form.toString());
-		var isCorrectLoginId = form.getLoginId().equals(LOGIN_ID);
-		var isCorrectPassword = form.getPassword().equals(PASSWORD);
-		System.out.println(isCorrectLoginId);
-		System.out.println(isCorrectPassword);
-		var isCorrectUserAuth = isCorrectLoginId && isCorrectPassword;
+//		var isCorrectLoginId = form.getLoginId().equals(LOGIN_ID);
+//		var isCorrectPassword = form.getPassword().equals(PASSWORD);
+//		System.out.println(isCorrectLoginId);
+//		System.out.println(isCorrectPassword);
+//		var isCorrectUserAuth = isCorrectLoginId && isCorrectPassword;
+		
+		var user = service.searchUserByEmail(form.getEmail());
+		
+		var isCorrectUserAuth = user.isPresent() && 
+				form.getPassword().equals(user.get().getPassword());
+		
 		if(isCorrectUserAuth) {
 			return "redirect:/mypage";
 		} else {

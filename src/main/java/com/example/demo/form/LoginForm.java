@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data  //Getter・Setterを作成してくれるアノテーション
 public class LoginForm {
-	private String loginId;
+	private String email;
 	private String password;
 }

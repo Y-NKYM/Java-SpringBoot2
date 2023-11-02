@@ -9,8 +9,8 @@
 	<span style="color:red;" th:text="${msg}"></span>
 	<form th:action="@{/login}" method="post" th:object="${loginForm}">
 		<div>
-			<label for="loginId">ログインID</label>
-			<input type="text" th:field="*{loginId}">
+			<label for="email">ログインID</label>
+			<input type="text" th:field="*{email}">
 		</div>
 		<div>
 			<label for="password">パスワード</label>
