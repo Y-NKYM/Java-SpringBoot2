@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.demo.constant.ErrorMessageConst;
 import com.example.demo.form.LoginForm;
 import com.example.demo.service.LoginService;
+import com.example.demo.util.AppUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +25,9 @@ public class LoginController {
 	
 	/** PasswordEncoder */
 	private final PasswordEncoder passwordEncoder;
+	
+	/** MessageSource */
+	private final MessageSource messageSource;
 	
 	/**
 	 * ログイン画面
@@ -44,21 +50,16 @@ public class LoginController {
 	 */
 	@PostMapping()
 	public String login(Model model, LoginForm form) {
-//		var encodedPassword = passwordEncoder.encode(form.getPassword());
-//		System.out.println(encodedPassword.toString());
 		
 		var user = service.searchUserByEmail(form.getEmail());
-		
-//		var isCorrectUserAuth = user.isPresent() && 
-//				form.getPassword().equals(user.get().getPassword());
-		
 		var isCorrectUserAuth = user.isPresent() && 
 				passwordEncoder.matches(form.getPassword(), user.get().getPassword());
 		
 		if(isCorrectUserAuth) {
 			return "redirect:/mypage";
 		} else {
-			model.addAttribute("msg", "ログイン情報が一致しません");
+			var errorMessage = AppUtil.getMessage(messageSource, ErrorMessageConst.LOGIN_WRONG_INPUT);
+			model.addAttribute("msg", errorMessage);
 			return "login";
 		}
 	}
