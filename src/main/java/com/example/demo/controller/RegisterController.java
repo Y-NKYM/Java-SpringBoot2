@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.form.RegisterForm;
+import com.example.demo.service.RegisterService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,14 +16,8 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/register")
 public class RegisterController {
 	
-//	/** ログイン画面 Service */
-//	private final LoginService service;
-//	
-//	/** PasswordEncoder */
-//	private final PasswordEncoder passwordEncoder;
-//	
-//	/** MessageSource */
-//	private final MessageSource messageSource;
+	/** 新規登録画面 Service */
+	private final RegisterService service;
 	
 	/**
 	 * 新規登録画面
@@ -38,6 +33,6 @@ public class RegisterController {
 	
 	@PostMapping()
 	public void register(Model model, RegisterForm form) {
-		
+		var user = service.registerUser(form);
 	}
 }
