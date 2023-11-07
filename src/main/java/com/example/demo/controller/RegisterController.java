@@ -43,7 +43,10 @@ public class RegisterController {
 	@PostMapping()
 	public String register(Model model, RegisterForm form) {
 		var user = service.registerUser(form);
-		var message = AppUtil.getMessage(messageSource, chooseMessageKey(user));
+		String params = "";
+		if(user.isPresent()) params = user.get().getLoginId().toString();
+		
+		var message = AppUtil.getMessage(messageSource, chooseMessageKey(user), params);
 		model.addAttribute("msg", message);
 		if(user.isPresent()) {
 			return "mypage";
