@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.Optional;
+
 import org.dozer.Mapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,16 +23,18 @@ public class RegisterService {
 	/** PasswordEncoder */
 	private final PasswordEncoder passwordEncoder;
 	
-	public User registerUser(RegisterForm form){
-//		var user = new User();
-//		user.setEmail(form.getEmail());
-//		user.setPassword(form.getPassword());
-
-		var user = mapper.map(form, User.class);
+	public Optional<User> registerUser(RegisterForm form){
+		var existedUser = repository.findById(form.getEmail());
 		
+		//メールアドレスが存在していた場合
+		if(existedUser.isPresent()) {
+			return Optional.empty();
+		}
+		
+		var user = mapper.map(form, User.class);
 		var encodedPassword = passwordEncoder.encode(form.getPassword());
 		user.setPassword(encodedPassword);
 		
-		return repository.save(user);
+		return Optional.of(repository.save(user));
 	}
 }
