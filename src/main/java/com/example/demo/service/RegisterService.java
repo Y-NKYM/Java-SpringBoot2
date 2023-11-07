@@ -24,7 +24,7 @@ public class RegisterService {
 	private final PasswordEncoder passwordEncoder;
 	
 	public Optional<User> registerUser(RegisterForm form){
-		var existedUser = repository.findById(form.getEmail());
+		var existedUser = repository.findByEmail(form.getEmail());
 		
 		//メールアドレスが存在していた場合
 		if(existedUser.isPresent()) {

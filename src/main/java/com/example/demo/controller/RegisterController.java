@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.Optional;
+
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.MessageConst;
+import com.example.demo.entity.User;
 import com.example.demo.form.RegisterForm;
 import com.example.demo.service.RegisterService;
 import com.example.demo.util.AppUtil;
@@ -38,14 +41,27 @@ public class RegisterController {
 	}
 	
 	@PostMapping()
-	public void register(Model model, RegisterForm form) {
+	public String register(Model model, RegisterForm form) {
 		var user = service.registerUser(form);
-		if(user.isEmpty()) {
-			var errorMessage = AppUtil.getMessage(messageSource, MessageConst.REGISTER_EXISTED_USER);
-			model.addAttribute("msg", errorMessage);
+		var message = AppUtil.getMessage(messageSource, chooseMessageKey(user));
+		model.addAttribute("msg", message);
+		if(user.isPresent()) {
+			return "mypage";
 		}else {
-			var message = AppUtil.getMessage(messageSource, MessageConst.REGISTER_SUCCEED);
-			model.addAttribute("msg", message);
+			return "register";
+		}
+	}
+	
+	/**
+	 * ユーザー情報登録の結果メッセージキーを判断
+	 * @param user もしくは Empty
+	 * @return
+	 */
+	private String chooseMessageKey(Optional<User> user) {
+		if(user.isEmpty()) {
+			return MessageConst.REGISTER_EXISTED_USER;
+		}else {
+			return MessageConst.REGISTER_SUCCEED;
 		}
 	}
 }
