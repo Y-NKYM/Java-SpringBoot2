@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.constant.MessageConst;
+import com.example.demo.constant.AlertMessage;
 import com.example.demo.entity.User;
 import com.example.demo.form.RegisterForm;
 import com.example.demo.service.RegisterService;
@@ -46,8 +46,12 @@ public class RegisterController {
 		String params = "";
 		if(user.isPresent()) params = user.get().getLoginId().toString();
 		
-		var message = AppUtil.getMessage(messageSource, chooseMessageKey(user), params);
+		//enum取得
+		var registerMessage = chooseMessageKey(user);
+		var message = AppUtil.getMessage(messageSource, registerMessage.getMessageId(), params);
 		model.addAttribute("msg", message);
+		model.addAttribute("isError", registerMessage.isError());
+		
 		if(user.isPresent()) {
 			return "mypage";
 		}else {
@@ -60,11 +64,13 @@ public class RegisterController {
 	 * @param user もしくは Empty
 	 * @return
 	 */
-	private String chooseMessageKey(Optional<User> user) {
+	private AlertMessage chooseMessageKey(Optional<User> user) {
 		if(user.isEmpty()) {
-			return MessageConst.REGISTER_EXISTED_USER;
+			//新規登録できずエラー
+			return AlertMessage.EXISTED_USER;
 		}else {
-			return MessageConst.REGISTER_SUCCEED;
+			//新規登録完了
+			return AlertMessage.SUCCEED;
 		}
 	}
 }

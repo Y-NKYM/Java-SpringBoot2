@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>My Page</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{/webjars/jquery/3.6.4/jquery.min.js}"></script>
+	<meta charset="UTF-8">
+	<title>My Page</title>
 </head>
 <body>
 	<h2>ログインしました。</h2>
-	<span style="color:seagreen;" th:text="${msg}"></span>
+	<div class="alert" role="alert" th:classappend="|${isError ? 'alert-danger' : 'alert-primary'}|" th:if="${msg != null}">
+		<span th:text="${msg}"></span>
+	</div>
 </body>
 </html>
