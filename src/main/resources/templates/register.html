@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
-	<script type="text/javascript" th:src="@{/webjars/jquery/3.6.4/jquery.min.js}"></script>
+
 	<meta charset="UTF-8">
 	<title>新規登録</title>
 </head>
 <body>
+	<div th:insert="partial/header::header"></div>
 	<h2>新規登録画面</h2>
-	<div class="alert" role="alert" th:classappend="|${isError ? 'alert-danger' : 'alert-primary'}|" th:if="${msg != null}">
-		<span th:text="${msg}"></span>
-	</div>
+	<div th:replace="partial/alert::alert"></div>
 
 	<form th:action="@{/register}" method="post" th:object="${registerForm}">
 		<div>
@@ -21,7 +19,7 @@
 			<label for="password">パスワード</label>
 			<input type="password" th:field="*{password}">
 		</div>
-		<button>新規登録</button>
+		<button class="btn btn-primary">新規登録</button>
 	</form>
 	<p>ログインの方は<a th:href="@{/login}">こちら</a></p>
 </body>

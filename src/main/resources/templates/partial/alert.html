@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="alert" role="alert" th:classappend="|${isError ? 'alert-danger' : 'alert-primary'}|" th:if="${msg != null}" th:fragment="alert">
+	<span th:text="${msg}"></span>
+</div>
+	
+</body>
+</html>
