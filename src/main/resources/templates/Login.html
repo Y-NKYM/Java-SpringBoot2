@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>ログイン画面</title>
+	<div th:replace="partial/header::header"></div>
+	<title>ログイン画面</title>
 </head>
 <body>
-	<h2>ログイン画面だよ</h2>
-	<span style="color:red;" th:text="${msg}"></span>
-	<form th:action="@{/login}" method="post" th:object="${loginForm}">
-		<div>
-			<label for="email">ログインID</label>
-			<input type="text" th:field="*{email}">
-		</div>
-		<div>
-			<label for="password">パスワード</label>
-			<input type="password" th:field="*{password}">
-		</div>
-		<button>送信</button>
-	</form>
-	<p>新規登録の方は<a th:href="@{/register}">こちら</a></p>
+	<div class="container">
+		<h2>ログイン画面だよ</h2>
+		<div th:replace="partial/alert::alert"></div>
+		
+		<form th:action="@{/login}" method="post" th:object="${loginForm}">
+			<div>
+				<label for="email" class="form-label">ログインID</label>
+				<input type="text" th:field="*{email}" class="form-control">
+			</div>
+			<div>
+				<label for="password" class="form-label">パスワード</label>
+				<input type="password" th:field="*{password}" class="form-control">
+			</div>
+			<button class="btn btn-primary">送信</button>
+		</form>
+		<p>新規登録の方は<a th:href="@{/register}">こちら</a></p>
+	</div>
 </body>
 </html>

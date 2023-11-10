@@ -8,8 +8,6 @@
 </head>
 <body>
 	<h2>ログインしました。</h2>
-	<div class="alert" role="alert" th:classappend="|${isError ? 'alert-danger' : 'alert-primary'}|" th:if="${msg != null}">
-		<span th:text="${msg}"></span>
-	</div>
+	<div th:replace="partial/alert::alert"></div>
 </body>
 </html>

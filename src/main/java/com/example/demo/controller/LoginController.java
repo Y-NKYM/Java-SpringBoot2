@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.constant.MessageConst;
+import com.example.demo.constant.AlertMessage;
 import com.example.demo.form.LoginForm;
 import com.example.demo.service.LoginService;
 import com.example.demo.util.AppUtil;
@@ -55,12 +55,30 @@ public class LoginController {
 		var isCorrectUserAuth = user.isPresent() && 
 				passwordEncoder.matches(form.getPassword(), user.get().getPassword());
 		
+		//enum取得
+		var registerMessage = chooseMessageKey(isCorrectUserAuth);
+		var message = AppUtil.getMessage(messageSource, registerMessage.getMessageId());
+		model.addAttribute("msg", message);
+		model.addAttribute("isError", registerMessage.isError());
+				
 		if(isCorrectUserAuth) {
-			return "redirect:/mypage";
+			System.out.println(message);
+			System.out.println(registerMessage.isError());
+			return "/mypage";
 		} else {
-			var errorMessage = AppUtil.getMessage(messageSource, MessageConst.LOGIN_WRONG_INPUT);
-			model.addAttribute("msg", errorMessage);
-			return "login";
+			System.out.println(message);
+			System.out.println(registerMessage.isError());
+			return "/login";
+		}
+	}
+	
+	private AlertMessage chooseMessageKey(boolean isCorrectUserAuth) {
+		if(!isCorrectUserAuth) {
+			//ログインできずエラー
+			return AlertMessage.LOGIN_ERROR;
+		}else {
+			//ログイン完了
+			return AlertMessage.LOGIN_SUCCEED;
 		}
 	}
 }
