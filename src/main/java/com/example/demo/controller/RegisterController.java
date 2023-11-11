@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.AlertMessage;
+import com.example.demo.constant.MessageConst;
 import com.example.demo.entity.User;
 import com.example.demo.form.RegisterForm;
 import com.example.demo.service.RegisterService;
@@ -46,6 +47,9 @@ public class RegisterController {
 	public String register(Model model, @Validated RegisterForm form, BindingResult bdResult) {
 		//バリデーション結果
 		if(bdResult.hasErrors()) {
+			var message = AppUtil.getMessage(messageSource, MessageConst.FORM_ERROR);
+			model.addAttribute("msg", message);
+			model.addAttribute("isError", true);
 			return "register";
 		}
 		

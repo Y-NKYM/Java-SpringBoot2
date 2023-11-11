@@ -7,4 +7,5 @@ public class MessageConst {
 	public static final String LOGIN_SUCCEED = "login.succeed";
 	public static final String REGISTER_EXISTED_USER = "register.existedUser";
 	public static final String REGISTER_SUCCEED="register.succeed";
+	public static final String FORM_ERROR = "common.formError";
 }
