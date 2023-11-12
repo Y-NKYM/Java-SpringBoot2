@@ -47,9 +47,10 @@ public class RegisterController {
 	public String register(Model model, @Validated RegisterForm form, BindingResult bdResult) {
 		//バリデーション結果
 		if(bdResult.hasErrors()) {
-			var message = AppUtil.getMessage(messageSource, MessageConst.FORM_ERROR);
-			model.addAttribute("msg", message);
-			model.addAttribute("isError", true);
+//			var message = AppUtil.getMessage(messageSource, MessageConst.FORM_ERROR);
+//			model.addAttribute("msg", message);
+//			model.addAttribute("isError", true);
+			editGuideMessage(model, MessageConst.FORM_ERROR, true);
 			return "register";
 		}
 		
@@ -59,15 +60,28 @@ public class RegisterController {
 		
 		//enum取得
 		var registerMessage = chooseMessageKey(user);
-		var message = AppUtil.getMessage(messageSource, registerMessage.getMessageId(), params);
-		model.addAttribute("msg", message);
-		model.addAttribute("isError", registerMessage.isError());
+//		var message = AppUtil.getMessage(messageSource, registerMessage.getMessageId(), params);
+//		model.addAttribute("msg", message);
+//		model.addAttribute("isError", registerMessage.isError());
+		editGuideMessage(model, registerMessage.getMessageId(), registerMessage.isError());
 		
 		if(user.isPresent()) {
 			return "mypage";
 		}else {
 			return "register";
 		}
+	}
+	
+	/**
+	 * アラート内メッセージの設定
+	 * @param model
+	 * @param messageId
+	 * @param isError
+	 */
+	private void editGuideMessage(Model model, String messageId, boolean isError) {
+		var message = AppUtil.getMessage(messageSource, messageId);
+		model.addAttribute("msg", message);
+		model.addAttribute("isError", isError);
 	}
 	
 	/**
