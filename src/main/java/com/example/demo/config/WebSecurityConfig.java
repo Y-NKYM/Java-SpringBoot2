@@ -43,8 +43,8 @@ public class WebSecurityConfig {
 		.formLogin(
 			login -> login.loginPage(UrlConst.LOGIN)
 				.usernameParameter(USERNAME_PARAMETER)
-				.defaultSuccessUrl(UrlConst.MYPAGE));
-		
+				.defaultSuccessUrl(UrlConst.MYPAGE))
+		.logout(logout -> logout.logoutSuccessUrl(UrlConst.LOGIN));
 		return http.build();
 	}
 	
