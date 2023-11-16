@@ -2,6 +2,7 @@ package com.example.demo.authentication;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
@@ -26,10 +27,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private final UserRepository repository;
 	
 	/** アカウントロック継続時間 */
-	private final int LOCKING_TIME = 1;
+	@Value("${security.locking-time}")
+	private int lockingTime;
 	
 	/** アカウントがロックされる失敗回数 */
-	private final int LOCKING_BORDER_COUNT = 3;
+	@Value("${security.locking-border-count}")
+	private int lockingBorderCount;
 	
 	/**
 	 * ユーザー情報生成
@@ -46,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		var accountLockedTime = user.getAccountLockedTime();
 		//「!null：ロック状態」かつ「ロック時間＋固定時間が現時間より後（時間がまだ立っていない）」
 		var isAccountLocked = accountLockedTime != null
-			&& accountLockedTime.plusMinutes(LOCKING_TIME).isAfter(LocalDateTime.now());
+			&& accountLockedTime.plusMinutes(lockingTime).isAfter(LocalDateTime.now());
 			
 		//UserとはEntityのこと
 		//withUsername()でusernameにメールをセット、passwordにはパスワードをセット
@@ -74,7 +77,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		repository.findByEmail(email).ifPresent(user -> {
 			repository.save(user.incrementLoginFailureCount());
 		
-			var isReachFailureCount = user.getLoginFailureCount() == LOCKING_BORDER_COUNT;
+			var isReachFailureCount = user.getLoginFailureCount() == lockingBorderCount;
 			if(isReachFailureCount) {
 				repository.save(user.updateAccountLocked());
 			}
