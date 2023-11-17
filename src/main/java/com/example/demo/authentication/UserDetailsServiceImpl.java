@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	/** アカウントがロックされる失敗回数 */
 	@Value("${security.locking-border-count}")
 	private int lockingBorderCount;
-	
+
 	/**
 	 * ユーザー情報生成
 	 * @param username ログイン検索に使用する値
