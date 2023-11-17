@@ -6,6 +6,7 @@ import org.dozer.Mapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.constant.AuthorityKind;
 import com.example.demo.entity.User;
 import com.example.demo.form.RegisterForm;
 import com.example.demo.repository.UserRepository;
@@ -34,6 +35,7 @@ public class RegisterService {
 		var user = mapper.map(form, User.class);
 		var encodedPassword = passwordEncoder.encode(form.getPassword());
 		user.setPassword(encodedPassword);
+		user.setAuthority(AuthorityKind.ITEM_WATCHER.getAuthorityKind());
 		
 		return Optional.of(repository.save(user));
 	}

@@ -34,15 +34,17 @@ public class User {
 	@Column(name="account_locked_time")
 	private LocalDateTime accountLockedTime;
 	
+	private String authority;
+	
 	public User incrementLoginFailureCount() {
-		return new User(loginId, email, password, isDisabled, ++loginFailureCount, accountLockedTime);
+		return new User(loginId, email, password, isDisabled, ++loginFailureCount, accountLockedTime, authority);
 	}
 	
 	public User resetLoginFailureInfo() {
-		return new User(loginId, email, password, isDisabled, 0, null);
+		return new User(loginId, email, password, isDisabled, 0, null, authority);
 	}
 	
 	public User updateAccountLocked() {
-		return new User(loginId, email, password, isDisabled, 0, LocalDateTime.now());
+		return new User(loginId, email, password, isDisabled, 0, LocalDateTime.now(), authority);
 	}
 }
