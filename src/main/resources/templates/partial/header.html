@@ -5,6 +5,7 @@
 		<div class="container-fluid">
 			<a class="navbar-brand" href="#">Navbar</a>
 			<form th:action="@{/logout}" method="post">
+				<span th:text="|ログインID：${#authentication.principal.username}|"></span>
 				<input type="submit" class="btn btn-primary" value="ログアウト">
 			</form>
 		</div>

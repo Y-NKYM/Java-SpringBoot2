@@ -6,7 +6,13 @@
 </head>
 <body>
 	<div th:replace="partial/header::header"></div>
-	<p>ログインしました。</p>
+		<p>ログインしました。</p>
 	<div th:replace="partial/alert::alert"></div>
+	<th:block th:if="${hasUserManageAuth}">
+	<div>
+		<h2>ユーザー情報の管理</h2>
+	</div>
+	<a href="#" class="btn btn-info">ユーザー管理画面へ</a>
+	</th:block>
 </body>
 </html>
