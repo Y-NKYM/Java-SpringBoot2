@@ -57,7 +57,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				.password(user.getPassword())
 				
 				//権限に関する処理
-				.roles("USER")
+				//.roles("USER")
+				
+				.authorities(user.getAuthority())
 				
 				//アカウントロック・利用可否チェック
 				.disabled(user.isDisabled())
