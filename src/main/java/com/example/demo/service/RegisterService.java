@@ -35,7 +35,7 @@ public class RegisterService {
 		var user = mapper.map(form, User.class);
 		var encodedPassword = passwordEncoder.encode(form.getPassword());
 		user.setPassword(encodedPassword);
-		user.setAuthority(AuthorityKind.ITEM_WATCHER.getAuthorityKind());
+		user.setAuthority(AuthorityKind.ITEM_WATCHER.getCode());
 		
 		return Optional.of(repository.save(user));
 	}

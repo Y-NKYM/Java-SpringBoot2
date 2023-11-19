@@ -20,7 +20,7 @@ public class HomeController {
 						.getAuthority()
 						.equals(AuthorityKind
 								.ITEM_AND_USER_MANAGER
-								.getAuthorityKind()));
+								.getCode()));
 		model.addAttribute("hasUserManageAuth", hasUserManageAuth);
 		return "mypage";
 	}
