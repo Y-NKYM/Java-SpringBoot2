@@ -13,6 +13,10 @@ public class UrlConst {
 	/** マイページ画面 */
 	public static final String MYPAGE = "/mypage";
 	
+	/** ユーザー一覧画面 */
+	public static final String USER_LIST = "/userList";
+	
 	/** 認証不要画面 */
 	public static final String[] NO_AUTH = { LOGIN, REGISTER, "/webjars/**" };
+	
 }
