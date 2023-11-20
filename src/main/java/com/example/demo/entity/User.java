@@ -2,7 +2,13 @@ package com.example.demo.entity;
 
 import java.time.LocalDateTime;
 
+import com.example.demo.constant.AuthorityKind;
+import com.example.demo.constant.UserStatusKind;
+import com.example.demo.entity.converter.UserAuthorityConverter;
+import com.example.demo.entity.converter.UserStatusConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,26 +31,32 @@ public class User {
 	private String email;
 	private String password;
 	
+	/** ユーザー状態種別 */
 	@Column(name="is_disabled")
-	private boolean isDisabled;
+	@Convert(converter=UserStatusConverter.class)
+	private UserStatusKind status;
 	
+	/** ログイン失敗回数 */
 	@Column(name="login_failure_count")
 	private int loginFailureCount = 0;
 	
+	/** アカウントロック日時 */
 	@Column(name="account_locked_time")
 	private LocalDateTime accountLockedTime;
 	
-	private String authority;
+	/** ユーザー権限種別 */
+	@Convert(converter=UserAuthorityConverter.class)
+	private AuthorityKind authority;
 	
 	public User incrementLoginFailureCount() {
-		return new User(loginId, email, password, isDisabled, ++loginFailureCount, accountLockedTime, authority);
+		return new User(loginId, email, password, status, ++loginFailureCount, accountLockedTime, authority);
 	}
 	
 	public User resetLoginFailureInfo() {
-		return new User(loginId, email, password, isDisabled, 0, null, authority);
+		return new User(loginId, email, password, status, 0, null, authority);
 	}
 	
 	public User updateAccountLocked() {
-		return new User(loginId, email, password, isDisabled, 0, LocalDateTime.now(), authority);
+		return new User(loginId, email, password, status, 0, LocalDateTime.now(), authority);
 	}
 }
