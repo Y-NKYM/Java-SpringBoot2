@@ -56,13 +56,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		return User.withUsername(user.getEmail())
 				.password(user.getPassword())
 				
-				//権限に関する処理
-				//.roles("USER")
-				
-				.authorities(user.getAuthority())
+				//Enumファイル内のgetAuthority()がEnum型になったため
+				//権限種別のコード値変数をcodeに変更したため。
+				.authorities(user.getAuthority().getCode())
 				
 				//アカウントロック・利用可否チェック
-				.disabled(user.isDisabled())
+				//Enumファイル内のgetAuthority()がEnum型になったため
+				.disabled(user.getStatus().isDisabled())
 				.accountLocked(isAccountLocked)
 				
 				//セットした情報でユーザーを作成する

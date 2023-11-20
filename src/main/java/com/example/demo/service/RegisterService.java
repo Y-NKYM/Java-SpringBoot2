@@ -35,7 +35,8 @@ public class RegisterService {
 		var user = mapper.map(form, User.class);
 		var encodedPassword = passwordEncoder.encode(form.getPassword());
 		user.setPassword(encodedPassword);
-		user.setAuthority(AuthorityKind.ITEM_WATCHER.getCode());
+		//Enum型を取得するように変更したため
+		user.setAuthority(AuthorityKind.ITEM_WATCHER);
 		
 		return Optional.of(repository.save(user));
 	}
