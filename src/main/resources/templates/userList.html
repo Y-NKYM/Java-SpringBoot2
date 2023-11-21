@@ -7,53 +7,82 @@
 <body>
 	<div th:replace="partial/header::header"></div>
 	<div class="container">
-		<h2 class="my-3">ユーザー情報一覧</h2>
-		<div th:replace="partial/alert::alert"></div>
+		<div>
+			<h2 class="my-3">ユーザー情報一覧</h2>
+			<div th:replace="partial/alert::alert"></div>
+			
+			<span>＜絞り込み検索条件＞</span>
+			
+			<form th:action="@{/userList}" method="post" th:object="${userListForm}">
+				<table>
+					<tbody>
+						<tr>
+							<td>
+								<label for="loginId" class="form-label">ログインID：</label>
+							</td>
+							<td>
+								<div class="row g-3 align-items-center my-1">
+									<div class="col-auto"><input type="text" class="form-control" th:field="*{loginId}"></div>
+									<div class="col-auto"><span>※部分一致</span></div>	
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><label for="userStatusKind" class="form-label">アカウント状態：</label></td>
+							<td>
+								<select class="form-select my-1" name="userStatusKind" id="userStatusKind">
+									<option value="">指定なし</option>
+									<option th:each="userStatusKind:${userStatusKinds}"
+										th:value="${userStatusKind}"
+										th:text="${userStatusKind.displayValue}">
+									</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><label for="authorityKind" class="form-label">所有権限：</label></td>
+							<td>
+								<select class="form-select my-1" name="authorityKind" id="authorityKind">
+									<option value="">指定なし</option>
+									<option th:each="authorityKind:${authorityKinds}"
+										th:value="${authorityKind}"
+										th:text="${authorityKind.displayValue}">
+									</option>
+								</select>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="btn btn-primary" name="search">検索</button>
+			</form>
+		</div>
 		
-		<span>＜絞り込み検索条件＞</span>
-		
-		<form th:action="@{/userList}" method="post" th:object="${userListForm}">
-			<table>
+		<div>
+			<table class="table table-striped" id="userList">
+				<thead>
+					<tr>
+						<th scope="col"></th>
+						<th scope="col">ログインID</th>
+						<th scope="col">メールアドレス</th>
+						<th scope="col">ログイン失敗回数</th>
+						<th scope="col">アカウントロック日時</th>
+						<th scope="col">アカウント状態</th>
+						<th scope="col">所有権限</th>
+					</tr>
+				</thead>
 				<tbody>
-					<tr>
-						<td>
-							<label for="loginId" class="form-label">ログインID：</label>
-						</td>
-						<td>
-							<div class="row g-3 align-items-center my-1">
-								<div class="col-auto"><input type="text" class="form-control" th:field="*{loginId}"></div>
-								<div class="col-auto"><span>※部分一致</span></div>	
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td><label for="userStatusKind" class="form-label">アカウント状態：</label></td>
-						<td>
-							<select class="form-select my-1" name="userStatusKind" id="userStatusKind">
-								<option value="">指定なし</option>
-								<option th:each="userStatusKind:${userStatusKinds}"
-									th:value="${userStatusKind}"
-									th:text="${userStatusKind.displayValue}">
-								</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td><label for="authorityKind" class="form-label">所有権限：</label></td>
-						<td>
-							<select class="form-select my-1" name="authorityKind" id="authorityKind">
-								<option value="">指定なし</option>
-								<option th:each="authorityKind:${authorityKinds}"
-									th:value="${authorityKind}"
-									th:text="${authorityKind.displayValue}">
-								</option>
-							</select>
-						</td>
+					<tr th:each="user, stat : ${userList}">
+						<th scope="row" th:text="${stat.count}"></th>
+						<td th:id="|loginId_${stat.count}|"><span th:text="${user.loginId}"></span></td>
+						<td th:id="|email_${stat.count}|"><span th:text="${user.email}"></span></td>
+						<td th:id="|loginFailureCount_${stat.count}|"><span th:text="${user.loginFailureCount}"></span></td>
+						<td th:id="|accountLockedTime_${stat.count}|"><span th:text="${user.accountLockedTime} != null? ${#temporals.format(user.accountLockedTime, 'yyyy-MM-dd HH:mm')}:'-'"></span></td>
+						<td th:id="|status_${stat.count}|"><span th:text="${user.status}"></span></td>
+						<td th:id="|authority_${stat.count}|"><span th:text="${user.authority}"></span></td>
 					</tr>
 				</tbody>
 			</table>
-			<button class="btn btn-primary" name="search">検索</button>
-		</form>
+		</div>
 	</div>
 </body>
 </html>
