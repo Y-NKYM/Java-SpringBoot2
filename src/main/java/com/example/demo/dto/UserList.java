@@ -10,6 +10,9 @@ public class UserList {
 	/** ログインID */
 	private String loginId;
 	
+	/** メールアドレス */
+	private String email;
+	
 	/** ログイン失敗回数 */
 	private int loginFailureCount;
 	
