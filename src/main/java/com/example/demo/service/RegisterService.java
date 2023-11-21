@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import java.util.Optional;
 
-import org.dozer.Mapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +9,7 @@ import com.example.demo.constant.AuthorityKind;
 import com.example.demo.entity.User;
 import com.example.demo.form.RegisterForm;
 import com.example.demo.repository.UserRepository;
+import com.github.dozermapper.core.Mapper;
 
 import lombok.RequiredArgsConstructor;
 
