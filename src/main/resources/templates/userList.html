@@ -58,30 +58,35 @@
 		</div>
 		
 		<div>
-			<table class="table table-striped" id="userList">
-				<thead>
-					<tr>
-						<th scope="col"></th>
-						<th scope="col">ログインID</th>
-						<th scope="col">メールアドレス</th>
-						<th scope="col">ログイン失敗回数</th>
-						<th scope="col">アカウントロック日時</th>
-						<th scope="col">アカウント状態</th>
-						<th scope="col">所有権限</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="user, stat : ${userList}">
-						<th scope="row" th:text="${stat.count}"></th>
-						<td th:id="|loginId_${stat.count}|"><span th:text="${user.loginId}"></span></td>
-						<td th:id="|email_${stat.count}|"><span th:text="${user.email}"></span></td>
-						<td th:id="|loginFailureCount_${stat.count}|"><span th:text="${user.loginFailureCount}"></span></td>
-						<td th:id="|accountLockedTime_${stat.count}|"><span th:text="${user.accountLockedTime} != null? ${#temporals.format(user.accountLockedTime, 'yyyy-MM-dd HH:mm')}:'-'"></span></td>
-						<td th:id="|status_${stat.count}|"><span th:text="${user.status}"></span></td>
-						<td th:id="|authority_${stat.count}|"><span th:text="${user.authority}"></span></td>
-					</tr>
-				</tbody>
-			</table>
+			<form action="#" method="post">
+				<table class="table table-striped" id="userList">
+					<thead>
+						<tr>
+							<th scope="col"></th>
+							<th scope="col">ログインID</th>
+							<th scope="col">メールアドレス</th>
+							<th scope="col">ログイン失敗回数</th>
+							<th scope="col">アカウントロック日時</th>
+							<th scope="col">アカウント状態</th>
+							<th scope="col">所有権限</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="user, stat : ${userList}">
+							<th scope="row" th:text="${stat.count}"></th>
+							<td th:id="|loginId_${stat.count}|"><span th:text="${user.loginId}"></span></td>
+							<td th:id="|email_${stat.count}|"><span th:text="${user.email}"></span></td>
+							<td th:id="|loginFailureCount_${stat.count}|"><span th:text="${user.loginFailureCount}"></span></td>
+							<td th:id="|accountLockedTime_${stat.count}|"><span th:text="${user.accountLockedTime} != null? ${#temporals.format(user.accountLockedTime, 'yyyy-MM-dd HH:mm')}:'-'"></span></td>
+							<td th:id="|status_${stat.count}|"><span th:text="${user.status}"></span></td>
+							<td th:id="|authority_${stat.count}|"><span th:text="${user.authority}"></span></td>
+						</tr>
+					</tbody>
+				</table>
+			
+				<button class="btn btn-secondary" id="updateBtn" name="update" disabled>更新</button>
+				<button class="btn btn-danger" id="deleteDummyBtn" disabled>削除</button>
+			</form>
 		</div>
 	</div>
 </body>
