@@ -1,11 +1,13 @@
 package com.example.demo.service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.constant.AuthorityKind;
+import com.example.demo.constant.UserStatusKind;
 import com.example.demo.entity.User;
 import com.example.demo.form.RegisterForm;
 import com.example.demo.repository.UserRepository;
@@ -36,7 +38,11 @@ public class RegisterService {
 		var encodedPassword = passwordEncoder.encode(form.getPassword());
 		user.setPassword(encodedPassword);
 		//Enum型を取得するように変更したため
+		user.setStatus(UserStatusKind.ENABLED);
 		user.setAuthority(AuthorityKind.ITEM_WATCHER);
+		//登録日時・最終更新日時の代入
+		user.setCreateTime(LocalDateTime.now());
+		user.setUpdateTime(LocalDateTime.now());
 		
 		return Optional.of(repository.save(user));
 	}
