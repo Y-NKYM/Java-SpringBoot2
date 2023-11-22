@@ -48,15 +48,23 @@ public class User {
 	@Convert(converter=UserAuthorityConverter.class)
 	private AuthorityKind authority;
 	
+	/** 登録日時 */
+	@Column(name="create_time")
+	private LocalDateTime createTime;
+	
+	/** 最終更新日時 */
+	@Column(name="update_time")
+	private LocalDateTime updateTime;
+	
 	public User incrementLoginFailureCount() {
-		return new User(loginId, email, password, status, ++loginFailureCount, accountLockedTime, authority);
+		return new User(loginId, email, password, status, ++loginFailureCount, accountLockedTime, authority, createTime, updateTime);
 	}
 	
 	public User resetLoginFailureInfo() {
-		return new User(loginId, email, password, status, 0, null, authority);
+		return new User(loginId, email, password, status, 0, null, authority, createTime, updateTime);
 	}
 	
 	public User updateAccountLocked() {
-		return new User(loginId, email, password, status, 0, LocalDateTime.now(), authority);
+		return new User(loginId, email, password, status, 0, LocalDateTime.now(), authority, createTime, updateTime);
 	}
 }

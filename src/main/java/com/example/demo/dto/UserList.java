@@ -24,4 +24,10 @@ public class UserList {
 	
 	/** 権限 */
 	private String authority;
+	
+	/** 登録日時 */
+	private LocalDateTime createTime;
+	
+	/** 最終更新日時 */
+	private LocalDateTime updateTime;
 }
