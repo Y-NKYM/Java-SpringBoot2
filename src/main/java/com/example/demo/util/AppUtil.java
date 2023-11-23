@@ -17,4 +17,8 @@ public class AppUtil {
 			String key, Object...params) {
 		return messageSource.getMessage(key, params, Locale.JAPAN);
 	}
+	
+	public static String addWildcard(String param) {
+		return "%" + param + "%";
+	}
 }
