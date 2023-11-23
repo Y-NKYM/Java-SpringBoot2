@@ -27,7 +27,7 @@ public class User {
 	@Id  //Primary keyに必要
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private Integer loginId;
+	private String loginId;
 	private String email;
 	private String password;
 	
