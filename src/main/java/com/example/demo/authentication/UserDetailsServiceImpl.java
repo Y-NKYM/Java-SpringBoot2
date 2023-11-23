@@ -58,11 +58,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				
 				//Enumファイル内のgetAuthority()がEnum型になったため
 				//権限種別のコード値変数をcodeに変更したため。
-				.authorities(user.getAuthority().getCode())
+				.authorities(user.getAuthorityKind().getCode())
 				
 				//アカウントロック・利用可否チェック
 				//Enumファイル内のgetAuthority()がEnum型になったため
-				.disabled(user.getStatus().isDisabled())
+				.disabled(user.getUserStatusKind().isDisabled())
 				.accountLocked(isAccountLocked)
 				
 				//セットした情報でユーザーを作成する

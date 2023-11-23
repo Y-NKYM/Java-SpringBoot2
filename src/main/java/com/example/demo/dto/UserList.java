@@ -20,10 +20,10 @@ public class UserList {
 	private LocalDateTime accountLockedTime;
 	
 	/** アカウント状態 */
-	private String status;
+	private String userStatusKind;
 	
 	/** 権限 */
-	private String authority;
+	private String authorityKind;
 	
 	/** 登録日時 */
 	private LocalDateTime createTime;

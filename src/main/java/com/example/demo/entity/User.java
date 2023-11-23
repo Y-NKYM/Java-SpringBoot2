@@ -34,7 +34,7 @@ public class User {
 	/** ユーザー状態種別 */
 	@Column(name="is_disabled")
 	@Convert(converter=UserStatusConverter.class)
-	private UserStatusKind status;
+	private UserStatusKind userStatusKind;
 	
 	/** ログイン失敗回数 */
 	@Column(name="login_failure_count")
@@ -45,8 +45,9 @@ public class User {
 	private LocalDateTime accountLockedTime;
 	
 	/** ユーザー権限種別 */
+	@Column(name="authority")
 	@Convert(converter=UserAuthorityConverter.class)
-	private AuthorityKind authority;
+	private AuthorityKind authorityKind;
 	
 	/** 登録日時 */
 	@Column(name="create_time")
@@ -57,14 +58,14 @@ public class User {
 	private LocalDateTime updateTime;
 	
 	public User incrementLoginFailureCount() {
-		return new User(loginId, email, password, status, ++loginFailureCount, accountLockedTime, authority, createTime, updateTime);
+		return new User(loginId, email, password, userStatusKind, ++loginFailureCount, accountLockedTime, authorityKind, createTime, updateTime);
 	}
 	
 	public User resetLoginFailureInfo() {
-		return new User(loginId, email, password, status, 0, null, authority, createTime, updateTime);
+		return new User(loginId, email, password, userStatusKind, 0, null, authorityKind, createTime, updateTime);
 	}
 	
 	public User updateAccountLocked() {
-		return new User(loginId, email, password, status, 0, LocalDateTime.now(), authority, createTime, updateTime);
+		return new User(loginId, email, password, userStatusKind, 0, LocalDateTime.now(), authorityKind, createTime, updateTime);
 	}
 }

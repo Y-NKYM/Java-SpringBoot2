@@ -38,8 +38,8 @@ public class RegisterService {
 		var encodedPassword = passwordEncoder.encode(form.getPassword());
 		user.setPassword(encodedPassword);
 		//Enum型を取得するように変更したため
-		user.setStatus(UserStatusKind.ENABLED);
-		user.setAuthority(AuthorityKind.ITEM_WATCHER);
+		user.setUserStatusKind(UserStatusKind.ENABLED);
+		user.setAuthorityKind(AuthorityKind.ITEM_WATCHER);
 		//登録日時・最終更新日時の代入
 		user.setCreateTime(LocalDateTime.now());
 		user.setUpdateTime(LocalDateTime.now());
