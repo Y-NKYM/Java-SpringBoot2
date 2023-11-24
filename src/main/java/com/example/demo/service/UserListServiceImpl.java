@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.UserList;
 import com.example.demo.entity.User;
+import com.example.demo.form.UserListForm;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.util.AppUtil;
 import com.github.dozermapper.core.Mapper;
 
 import lombok.RequiredArgsConstructor;
@@ -21,8 +23,15 @@ public class UserListServiceImpl implements UserListService {
 	/** Dozer Mapper */
 	private final Mapper mapper;
 	
+	@Override
 	public List<UserList> editUserList(){
 		return toUserLists(repository.findAll());
+	}
+	
+	@Override
+	public List<UserList> editUserListByParam(UserListForm form){
+		var user = mapper.map(form, User.class);
+		return toUserLists(findUserByParam(user));
 	}
 	
 	/**
@@ -35,11 +44,24 @@ public class UserListServiceImpl implements UserListService {
 		var userLists = new ArrayList<UserList>();
 		for(User user: users) {
 			var userList = mapper.map(user, UserList.class);
-			userList.setStatus(user.getStatus().getDisplayValue());
-			userList.setAuthority(user.getAuthority().getDisplayValue());
+			userList.setUserStatusKind(user.getUserStatusKind().getDisplayValue());
+			userList.setAuthorityKind(user.getAuthorityKind().getDisplayValue());
 			userLists.add(userList);
 		}
 		return userLists;
+	}
+	
+	private List<User> findUserByParam(User user){
+		var loginIdParam = AppUtil.addWildcard(user.getLoginId().toString());
+		if(user.getUserStatusKind()!=null && user.getAuthorityKind()!= null) {
+			return repository.findByLoginIdLikeAndUserStatusKindAndAuthorityKind(loginIdParam, user.getUserStatusKind(), user.getAuthorityKind());
+		}else if(user.getUserStatusKind()!=null) {
+			return repository.findByLoginIdLikeAndUserStatusKind(loginIdParam, user.getUserStatusKind());
+		}else if(user.getAuthorityKind()!= null) {
+			return repository.findByLoginIdLikeAndAuthorityKind(loginIdParam, user.getAuthorityKind());
+		}else {
+			return repository.findByLoginIdLike(loginIdParam);
+		}
 	}
 
 }

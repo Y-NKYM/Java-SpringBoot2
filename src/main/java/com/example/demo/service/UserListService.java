@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 
 import com.example.demo.dto.UserList;
+import com.example.demo.form.UserListForm;
 
 public interface UserListService {
 	
@@ -11,4 +12,6 @@ public interface UserListService {
 	 * @return ユーザー情報テーブルの全登録情報の配列
 	 */
 	public List<UserList> editUserList();
+	
+	public List<UserList> editUserListByParam(UserListForm form);
 }
