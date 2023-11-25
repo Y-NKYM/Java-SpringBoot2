@@ -23,11 +23,22 @@ public class UserListServiceImpl implements UserListService {
 	/** Dozer Mapper */
 	private final Mapper mapper;
 	
+	/**
+	 * データベース内のユーザーテーブル情報の全てを取得します。
+	 * 
+	 * @return UserList DBから得た全ユーザー情報をUserList型に型変換したもの。
+	 */
 	@Override
 	public List<UserList> editUserList(){
 		return toUserLists(repository.findAll());
 	}
 	
+	/**
+	 * UserListForm（検索用フォーム）からUserEntityへ型変換し、toUserListsメソッドへ引き渡します。
+	 * 
+	 * @param UserListForm 検索条件データ
+	 * @return DBから得た各ユーザー情報をUserList型に型変換したもの。
+	 */
 	@Override
 	public List<UserList> editUserListByParam(UserListForm form){
 		var user = mapper.map(form, User.class);
@@ -51,8 +62,14 @@ public class UserListServiceImpl implements UserListService {
 		return userLists;
 	}
 	
+	/**
+	 * 検索条件を元にデータベースから対応するユーザー情報一覧を取得します。
+	 * 
+	 * @param UserEntity 検索条件データ
+	 * @return DBからの結果を持つUserEntityの集まり
+	 */
 	private List<User> findUserByParam(User user){
-		var loginIdParam = AppUtil.addWildcard(user.getLoginId().toString());
+		var loginIdParam = AppUtil.addWildcard(user.getLoginId());
 		if(user.getUserStatusKind()!=null && user.getAuthorityKind()!= null) {
 			return repository.findByLoginIdLikeAndUserStatusKindAndAuthorityKind(loginIdParam, user.getUserStatusKind(), user.getAuthorityKind());
 		}else if(user.getUserStatusKind()!=null) {

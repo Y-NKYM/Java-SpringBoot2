@@ -13,5 +13,10 @@ public interface UserListService {
 	 */
 	public List<UserList> editUserList();
 	
+	/**
+	 * 検索条件の情報のフォームを使って検索し、ユーザー一覧画面に必要な情報に返します。
+	 * @param form
+	 * @return 検索条件に対応するユーザー情報テーブルの登録情報の配列
+	 */
 	public List<UserList> editUserListByParam(UserListForm form);
 }
