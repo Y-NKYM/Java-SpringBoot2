@@ -3,17 +3,19 @@
 <head>
 	<div th:replace="partial/head::head"></div>
 	<title>ユーザー情報一覧</title>
+	<script type="text/javascript" th:src="@{/js/userList.js}"></script>
 </head>
 <body>
 	<div th:replace="partial/header::header"></div>
 	<div class="container">
-		<div>
-			<h2 class="my-3">ユーザー情報一覧</h2>
-			<div th:replace="partial/alert::alert"></div>
-			
-			<span>＜絞り込み検索条件＞</span>
-			
-			<form th:action="@{/userList}" method="post" th:object="${userListForm}">
+		
+		<h2 class="my-3">ユーザー情報一覧</h2>
+		<div th:replace="partial/alert::alert"></div>
+		
+		<span>＜絞り込み検索条件＞</span>
+		
+		<form th:action="@{/userList}" method="post" th:object="${userListForm}">
+			<div>
 				<table>
 					<tbody>
 						<tr>
@@ -54,12 +56,11 @@
 					</tbody>
 				</table>
 				<button class="btn btn-primary" name="search">検索</button>
-			</form>
-		</div>
 		
-		<div>
-			<th:block th:unless="${#lists.isEmpty(userList)}">
-				<form action="@{/manageUser}" method="post">
+			</div>
+			<div>
+				<th:block th:unless="${#lists.isEmpty(userList)}">
+			
 					<table class="table table-striped" id="userList">
 						<thead>
 							<tr>
@@ -88,16 +89,36 @@
 							</tr>
 						</tbody>
 					</table>
-				
-					<button class="btn btn-secondary" id="updateBtn" name="update" disabled>更新</button>
-					<button class="btn btn-danger" id="deleteDummyBtn" disabled>削除</button>
-				</form>
-			</th:block>
-			<th:block th:if="${#lists.isEmpty(userList)}">
-				<div class="text-center">
-					<span>※対象のユーザーは存在しません。</span>
+					
+					<input type="text" id="selectedLoginId" hidden>
+					<input type="submit" class="btn btn-secondary" id="updateBtn" name="update" value="更新" disabled>
+					<input type="button" class="btn btn-danger" id="deleteDummyBtn" data-bs-toggle="modal" data-bs-target="#deleteConfirm" value="削除" disabled>
+				</th:block>
+				<th:block th:if="${#lists.isEmpty(userList)}">
+					<div class="text-center">
+						<span>※対象のユーザーは存在しません。</span>
+					</div>
+				</th:block>
+			</div>
+		</form>
+	</div>
+	
+	<!-- 削除確認モーダルの設定 -->
+	<div class="modal fade" id="deleteConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">削除前確認</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-			</th:block>
+				<div class="modal-body">
+					本当に削除してもよろしいですか？
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+					<button type="button" class="btn btn-danger" id="deleteOkBtn">削除する</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
