@@ -17,6 +17,6 @@ public class UrlConst {
 	public static final String USER_LIST = "/userList";
 	
 	/** 認証不要画面 */
-	public static final String[] NO_AUTH = { LOGIN, REGISTER, "/webjars/**" };
+	public static final String[] NO_AUTH = { LOGIN, REGISTER, "/webjars/**", "/css/**" };
 	
 }
