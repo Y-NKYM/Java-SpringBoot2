@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.UserList;
+import com.example.demo.dto.UserSearch;
 import com.example.demo.entity.User;
-import com.example.demo.form.UserListForm;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.util.AppUtil;
 import com.github.dozermapper.core.Mapper;
@@ -40,9 +40,8 @@ public class UserListServiceImpl implements UserListService {
 	 * @return DBから得た各ユーザー情報をUserList型に型変換したもの。
 	 */
 	@Override
-	public List<UserList> editUserListByParam(UserListForm form){
-		var user = mapper.map(form, User.class);
-		return toUserLists(findUserByParam(user));
+	public List<UserList> editUserListByParam(UserSearch dto){
+		return toUserLists(findUserByParam(dto));
 	}
 	
 	/**
@@ -68,14 +67,14 @@ public class UserListServiceImpl implements UserListService {
 	 * @param UserEntity 検索条件データ
 	 * @return DBからの結果を持つUserEntityの集まり
 	 */
-	private List<User> findUserByParam(User user){
-		var loginIdParam = AppUtil.addWildcard(user.getLoginId());
-		if(user.getUserStatusKind()!=null && user.getAuthorityKind()!= null) {
-			return repository.findByLoginIdLikeAndUserStatusKindAndAuthorityKind(loginIdParam, user.getUserStatusKind(), user.getAuthorityKind());
-		}else if(user.getUserStatusKind()!=null) {
-			return repository.findByLoginIdLikeAndUserStatusKind(loginIdParam, user.getUserStatusKind());
-		}else if(user.getAuthorityKind()!= null) {
-			return repository.findByLoginIdLikeAndAuthorityKind(loginIdParam, user.getAuthorityKind());
+	private List<User> findUserByParam(UserSearch dto){
+		var loginIdParam = AppUtil.addWildcard(dto.getLoginId());
+		if(dto.getUserStatusKind()!=null && dto.getAuthorityKind()!= null) {
+			return repository.findByLoginIdLikeAndUserStatusKindAndAuthorityKind(loginIdParam, dto.getUserStatusKind(), dto.getAuthorityKind());
+		}else if(dto.getUserStatusKind()!=null) {
+			return repository.findByLoginIdLikeAndUserStatusKind(loginIdParam, dto.getUserStatusKind());
+		}else if(dto.getAuthorityKind()!= null) {
+			return repository.findByLoginIdLikeAndAuthorityKind(loginIdParam, dto.getAuthorityKind());
 		}else {
 			return repository.findByLoginIdLike(loginIdParam);
 		}

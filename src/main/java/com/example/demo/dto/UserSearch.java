@@ -1,6 +1,4 @@
-package com.example.demo.form;
-
-import org.hibernate.validator.constraints.Length;
+package com.example.demo.dto;
 
 import com.example.demo.constant.AuthorityKind;
 import com.example.demo.constant.UserStatusKind;
@@ -8,10 +6,9 @@ import com.example.demo.constant.UserStatusKind;
 import lombok.Data;
 
 @Data
-public class UserListForm {
+public class UserSearch {
 	
 	/** ログインID */
-	@Length(min=2, max=20)
 	private String loginId;
 	
 	/** アカウント状態種別 */
@@ -19,8 +16,5 @@ public class UserListForm {
 	
 	/** ユーザー権限種別 */
 	private AuthorityKind authorityKind;
-	
-	/** ユーザー一覧情報から選択されたユーザーのログインID */
-	private String selectedLoginId;
-	
+
 }

@@ -4,19 +4,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.AuthorityKind;
 import com.example.demo.constant.UrlConst;
 import com.example.demo.constant.UserStatusKind;
+import com.example.demo.dto.UserSearch;
 import com.example.demo.form.UserListForm;
 import com.example.demo.service.UserListService;
+import com.github.dozermapper.core.Mapper;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping(UrlConst.USER_LIST)
 public class UserListController {
+	
 	private final UserListService service;
+	
+	/** Dozer Mapper */
+	private final Mapper mapper;
 	
 	/** モデルキー：ユーザー情報リスト */
 	private static final String KEY_USERLIST="userList";
@@ -28,7 +36,7 @@ public class UserListController {
 	private static final String KEY_AUTHORITY_KIND_OPTIONS="authorityKindOptions";
 
 	
-	@GetMapping(UrlConst.USER_LIST)
+	@GetMapping()
 	public String view(Model model, UserListForm form) {
 		var users = service.editUserList();
 		model.addAttribute(KEY_USERLIST, users);
@@ -39,9 +47,10 @@ public class UserListController {
 		return "userList";
 	}
 	
-	@PostMapping(UrlConst.USER_LIST)
+	@PostMapping(params = "search")
 	public String searchUsers(Model model, UserListForm form) {
-		var users = service.editUserListByParam(form);
+		var searchDto = mapper.map(form, UserSearch.class);
+		var users = service.editUserListByParam(searchDto);
 		model.addAttribute(KEY_USERLIST, users);
 		
 		model.addAttribute(KEY_USER_STATUS_KIND_OPTIONS, UserStatusKind.values());
