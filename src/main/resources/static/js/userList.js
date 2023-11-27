@@ -1,9 +1,5 @@
 $(function() {
-//	$('#deleteOkBtn').click(function(){
-//		$('#deleteBtn').trigger('click');
-//	})
-	
-	
+
 	//テーブルの行をクリックしたときの処理
 	//id=userListのtbodyタグのtrタグ（特定のテーブルの行）がクリックされた時
 	$('#userList tbody tr').on('click', function(){
@@ -18,6 +14,13 @@ $(function() {
 		
 		editSelectedLoginId($(this));
 	});
+	
+	//ポップアップの削除ボタンが押された時
+	$('#deleteOkBtn').click(function(){
+		//id="deleteBtn"のボタンをクリック
+		$('#deleteBtn').trigger('click');
+	})
+	
 });
 
 //@param <tr> クリックされた行を引数として受け取る。

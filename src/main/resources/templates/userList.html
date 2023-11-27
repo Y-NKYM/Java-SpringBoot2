@@ -8,10 +8,9 @@
 <body>
 	<div th:replace="partial/header::header"></div>
 	<div class="container">
-		
-		<h2 class="my-3">ユーザー情報一覧</h2>
 		<div th:replace="partial/alert::alert"></div>
 		
+		<h2 class="my-3">ユーザー情報一覧</h2>
 		<span>＜絞り込み検索条件＞</span>
 		
 		<form th:action="@{/userList}" method="post" th:object="${userListForm}">
@@ -90,9 +89,10 @@
 						</tbody>
 					</table>
 					
-					<input type="text" id="selectedLoginId" hidden>
+					<input type="text" th:field="${selectedLoginId}" hidden>
 					<input type="submit" class="btn btn-secondary" id="updateBtn" name="update" value="更新" disabled>
 					<input type="button" class="btn btn-danger" id="deleteDummyBtn" data-bs-toggle="modal" data-bs-target="#deleteConfirm" value="削除" disabled>
+					<input type="submit" id="deleteBtn" name="delete" hidden>
 				</th:block>
 				<th:block th:if="${#lists.isEmpty(userList)}">
 					<div class="text-center">
