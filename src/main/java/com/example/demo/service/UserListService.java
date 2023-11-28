@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.constant.ExecuteResult;
+import com.example.demo.constant.UserDeleteResult;
 import com.example.demo.dto.UserList;
 import com.example.demo.dto.UserSearch;
 
@@ -26,5 +26,5 @@ public interface UserListService {
 	 * @param loginId ログインID
 	 * @return Enum 実行結果（エラー有無）
 	 */
-	public ExecuteResult deleteUserById(String loginId);
+	public UserDeleteResult deleteUserById(String loginId);
 }

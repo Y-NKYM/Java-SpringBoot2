@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ExecuteResult {
+public enum UserDeleteResult {
 	SUCCEED(MessageConst.USERLIST_DELETE_SUCCEED),
 	ERROR(MessageConst.USERLIST_NON_EXISTED_LOGIN_ID);
 	

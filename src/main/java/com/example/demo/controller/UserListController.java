@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.AuthorityKind;
-import com.example.demo.constant.ExecuteResult;
 import com.example.demo.constant.UrlConst;
+import com.example.demo.constant.UserDeleteResult;
 import com.example.demo.constant.UserStatusKind;
 import com.example.demo.constant.ViewNameConst;
 import com.example.demo.dto.UserSearch;
@@ -68,11 +68,11 @@ public class UserListController {
 	
 	@PostMapping(params = "delete")
 	public String deleteUser(Model model, UserListForm form) {
-		var executeResult = service.deleteUserById(form.getSelectedLoginId());
+		var userDeleteResult = service.deleteUserById(form.getSelectedLoginId());
 		//取得したExecuteResultがErrorかSucceedかを判別。
-		model.addAttribute("isError", executeResult == ExecuteResult.ERROR);
+		model.addAttribute("isError", userDeleteResult == UserDeleteResult.ERROR);
 		//
-		model.addAttribute("msg", AppUtil.getMessage(messageSource, executeResult.getMessageId()));
+		model.addAttribute("msg", AppUtil.getMessage(messageSource, userDeleteResult.getMessageId()));
 		return searchUsers(model, form.clearSelectedLoginId());
 	}
 	
