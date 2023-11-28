@@ -23,4 +23,14 @@ public class UserListForm {
 	/** ユーザー一覧情報から選択されたユーザーのログインID */
 	private String selectedLoginId;
 	
+	/**
+	 * selectedLoginIdを初期化し、このクラスを返す。
+	 * 削除された後、検索ボタンをクリックする動作となる。
+	 * @return UserListForm
+	 */
+	public UserListForm clearSelectedLoginId() {
+		this.selectedLoginId = null;
+		return this;
+	}
+	
 }

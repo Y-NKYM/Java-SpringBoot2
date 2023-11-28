@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,11 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.AuthorityKind;
+import com.example.demo.constant.ExecuteResult;
 import com.example.demo.constant.UrlConst;
 import com.example.demo.constant.UserStatusKind;
 import com.example.demo.dto.UserSearch;
 import com.example.demo.form.UserListForm;
 import com.example.demo.service.UserListService;
+import com.example.demo.util.AppUtil;
 import com.github.dozermapper.core.Mapper;
 
 import lombok.RequiredArgsConstructor;
@@ -21,10 +24,14 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(UrlConst.USER_LIST)
 public class UserListController {
 	
+	/** ユーザー一覧画面Serviceクラス */
 	private final UserListService service;
 	
 	/** Dozer Mapper */
 	private final Mapper mapper;
+	
+	/** メッセージソース */
+	private final MessageSource messageSource;
 	
 	/** モデルキー：ユーザー情報リスト */
 	private static final String KEY_USERLIST="userList";
@@ -56,6 +63,16 @@ public class UserListController {
 		model.addAttribute(KEY_USER_STATUS_KIND_OPTIONS, UserStatusKind.values());
 		model.addAttribute(KEY_AUTHORITY_KIND_OPTIONS, AuthorityKind.values());
 		return "userList";
+	}
+	
+	@PostMapping(params = "delete")
+	public String deleteUser(Model model, UserListForm form) {
+		var executeResult = service.deleteUserById(form.getSelectedLoginId());
+		//取得したExecuteResultがErrorかSucceedかを判別。
+		model.addAttribute("isError", executeResult == ExecuteResult.ERROR);
+		//
+		model.addAttribute("msg", AppUtil.getMessage(messageSource, executeResult.getMessageId()));
+		return searchUsers(model, form.clearSelectedLoginId());
 	}
 	
 }
