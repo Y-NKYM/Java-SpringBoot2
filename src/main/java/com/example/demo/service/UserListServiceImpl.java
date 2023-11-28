@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.constant.ExecuteResult;
 import com.example.demo.dto.UserList;
 import com.example.demo.dto.UserSearch;
 import com.example.demo.entity.User;
@@ -42,6 +43,16 @@ public class UserListServiceImpl implements UserListService {
 	@Override
 	public List<UserList> editUserListByParam(UserSearch dto){
 		return toUserLists(findUserByParam(dto));
+	}
+	
+	@Override
+	public ExecuteResult deleteUserById(String loginId) {
+		var user = repository.findById(loginId);
+		if(user.isEmpty()) {
+			return ExecuteResult.ERROR;
+		}
+		repository.deleteById(loginId);
+		return ExecuteResult.SUCCEED;
 	}
 	
 	/**

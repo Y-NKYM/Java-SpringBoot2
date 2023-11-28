@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import com.example.demo.constant.ExecuteResult;
 import com.example.demo.dto.UserList;
 import com.example.demo.dto.UserSearch;
 
@@ -19,4 +20,11 @@ public interface UserListService {
 	 * @return 検索条件に対応するユーザー情報テーブルの登録情報の配列
 	 */
 	public List<UserList> editUserListByParam(UserSearch dto);
+	
+	/**
+	 * 指定されたIDのユーザー情報を削除します。
+	 * @param loginId ログインID
+	 * @return Enum 実行結果（エラー有無）
+	 */
+	public ExecuteResult deleteUserById(String loginId);
 }
