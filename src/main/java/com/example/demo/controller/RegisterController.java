@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.constant.AlertMessage;
 import com.example.demo.constant.MessageConst;
 import com.example.demo.constant.UrlConst;
+import com.example.demo.constant.ViewNameConst;
 import com.example.demo.entity.User;
 import com.example.demo.form.RegisterForm;
 import com.example.demo.service.RegisterService;
@@ -52,7 +53,7 @@ public class RegisterController {
 //			model.addAttribute("msg", message);
 //			model.addAttribute("isError", true);
 			editGuideMessage(model, MessageConst.FORM_ERROR, true);
-			return "register";
+			return ViewNameConst.REGISTER;
 		}
 		
 		var user = service.registerUser(form);
@@ -67,9 +68,9 @@ public class RegisterController {
 		editGuideMessage(model, registerMessage.getMessageId(), registerMessage.isError());
 		
 		if(user.isPresent()) {
-			return "mypage";
+			return ViewNameConst.MYPAGE;
 		}else {
-			return "register";
+			return ViewNameConst.REGISTER;
 		}
 	}
 	

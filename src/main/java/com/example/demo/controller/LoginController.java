@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.AlertMessage;
 import com.example.demo.constant.UrlConst;
+import com.example.demo.constant.ViewNameConst;
 import com.example.demo.form.LoginForm;
 import com.example.demo.service.LoginService;
 import com.example.demo.util.AppUtil;
@@ -44,7 +45,7 @@ public class LoginController {
 	 */
 	@GetMapping()
 	public String view(Model model, LoginForm form) {
-		return "login";
+		return ViewNameConst.LOGIN;
 	}
 	
 	/**
@@ -59,7 +60,7 @@ public class LoginController {
 		var errorInfo = (Exception)session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 		model.addAttribute("msg", errorInfo.getMessage());
 		model.addAttribute("isError", true);
-		return "login";
+		return ViewNameConst.LOGIN;
 	}
 	
 	/**
@@ -85,11 +86,11 @@ public class LoginController {
 		if(isCorrectUserAuth) {
 			System.out.println(message);
 			System.out.println(registerMessage.isError());
-			return "/mypage";
+			return ViewNameConst.MYPAGE;
 		} else {
 			System.out.println(message);
 			System.out.println(registerMessage.isError());
-			return "/login";
+			return ViewNameConst.LOGIN;
 		}
 	}
 	

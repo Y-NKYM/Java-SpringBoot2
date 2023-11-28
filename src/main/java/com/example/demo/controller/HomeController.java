@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.AuthorityKind;
 import com.example.demo.constant.UrlConst;
+import com.example.demo.constant.ViewNameConst;
 
 @Controller
 @RequestMapping()
@@ -22,6 +23,6 @@ public class HomeController {
 								.ITEM_AND_USER_MANAGER
 								.getCode()));
 		model.addAttribute("hasUserManageAuth", hasUserManageAuth);
-		return "mypage";
+		return ViewNameConst.MYPAGE;
 	}
 }
