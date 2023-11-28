@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.constant.AuthorityKind;
 import com.example.demo.constant.UrlConst;
 import com.example.demo.constant.ViewNameConst;
+import com.example.demo.constant.db.AuthorityKind;
 
 @Controller
 @RequestMapping()
