@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<div th:replace="partial/head::head"></div>
+	<div th:replace="~{partial/head::head}"></div>
 	<title>My Page</title>
 </head>
 <body>
-	<div th:replace="partial/header::header"></div>
+	<div th:replace="~{partial/header::header}"></div>
 		<p>ログインしました。</p>
-	<div th:replace="partial/alert::alert"></div>
+	<div th:replace="~{partial/alert::alert}"></div>
 	<th:block th:if="${hasUserManageAuth}">
 	<div>
 		<h2>ユーザー情報の管理</h2>

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<div th:replace="partial/head::head"></div>
+	<div th:replace="~{partial/head::head}"></div>
 	<title>ユーザー情報一覧</title>
 	<script type="text/javascript" th:src="@{/js/userList.js}"></script>
 </head>
 <body>
-	<div th:replace="partial/header::header"></div>
+	<div th:replace="~{partial/header::header}"></div>
 	<div class="container">
-		<div th:replace="partial/alert::alert"></div>
+		<div th:replace="~{partial/alert::alert}"></div>
 		
 		<h2 class="my-3">ユーザー情報一覧</h2>
 		<span>＜絞り込み検索条件＞</span>

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<div th:replace="partial/head::head"></div>
+	<div th:replace="~{partial/head::head}"></div>
 	<title>ログイン画面</title>
 </head>
 <body>
 	<div class="container">
 		<h2>ログイン画面だよ</h2>
-		<div th:replace="partial/alert::alert"></div>
+		<div th:replace="~{partial/alert::alert}"></div>
 		
 		<form th:action="@{/login}" method="post" th:object="${loginForm}">
 			<div>
