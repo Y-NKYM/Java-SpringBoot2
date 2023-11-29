@@ -9,7 +9,7 @@ $(function() {
 		$(this).addClass('table-active');
 		
 		//更新ボタンと削除ボタンの活性化
-		$('#updateBtn').removeAttr('disabled');
+		$('#editBtn').removeAttr('disabled');
 		$('#deleteDummyBtn').removeAttr('disabled');
 		
 		editSelectedLoginId($(this));
