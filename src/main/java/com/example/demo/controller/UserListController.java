@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.demo.constant.SessionKeyConst;
 import com.example.demo.constant.UrlConst;
 import com.example.demo.constant.UserDeleteResult;
 import com.example.demo.constant.ViewNameConst;
@@ -18,6 +19,7 @@ import com.example.demo.service.UserListService;
 import com.example.demo.util.AppUtil;
 import com.github.dozermapper.core.Mapper;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -34,6 +36,9 @@ public class UserListController {
 	/** メッセージソース */
 	private final MessageSource messageSource;
 	
+	/** セッション */
+	private final HttpSession session;
+	
 	/** モデルキー：ユーザー情報リスト */
 	private static final String KEY_USERLIST="userList";
 	
@@ -42,10 +47,12 @@ public class UserListController {
 	
 	/** モデルキー：ユーザー権限Enum */
 	private static final String KEY_AUTHORITY_KIND_OPTIONS="authorityKindOptions";
-
 	
 	@GetMapping()
 	public String view(Model model, UserListForm form) {
+		//sessionの削除
+		session.removeAttribute(SessionKeyConst.SELECTED_LOGIN_ID);
+		
 		var users = service.editUserList();
 		model.addAttribute(KEY_USERLIST, users);
 		
@@ -76,4 +83,9 @@ public class UserListController {
 		return searchUsers(model, form.clearSelectedLoginId());
 	}
 	
+	@PostMapping(params = "edit")
+	public String updateUser(UserListForm form){
+		session.setAttribute(SessionKeyConst.SELECTED_LOGIN_ID, form.getSelectedLoginId());
+		return AppUtil.doRedirect(UrlConst.USER_EDIT);
+	}
 }

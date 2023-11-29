@@ -21,4 +21,8 @@ public class AppUtil {
 	public static String addWildcard(String param) {
 		return "%" + param + "%";
 	}
+	
+	public static String doRedirect(String url) {
+		return "redirect:" + url;
+	}
 }
