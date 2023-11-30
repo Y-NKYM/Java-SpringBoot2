@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.constant.db.AuthorityKind;
 import com.example.demo.constant.db.UserStatusKind;
-import com.example.demo.entity.User;
+import com.example.demo.entity.UserInfo;
 import com.example.demo.form.RegisterForm;
 import com.example.demo.repository.UserRepository;
 import com.github.dozermapper.core.Mapper;
@@ -26,7 +26,7 @@ public class RegisterService {
 	/** PasswordEncoder */
 	private final PasswordEncoder passwordEncoder;
 	
-	public Optional<User> registerUser(RegisterForm form){
+	public Optional<UserInfo> registerUser(RegisterForm form){
 		var existedUser = repository.findByEmail(form.getEmail());
 		
 		//メールアドレスが存在していた場合
@@ -34,7 +34,7 @@ public class RegisterService {
 			return Optional.empty();
 		}
 		
-		var user = mapper.map(form, User.class);
+		var user = mapper.map(form, UserInfo.class);
 		var encodedPassword = passwordEncoder.encode(form.getPassword());
 		user.setPassword(encodedPassword);
 		//Enum型を取得するように変更したため

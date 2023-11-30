@@ -12,7 +12,7 @@ import com.example.demo.constant.ViewNameConst;
 import com.example.demo.constant.db.AuthorityKind;
 import com.example.demo.constant.db.UserStatusKind;
 import com.example.demo.dto.UserEdit;
-import com.example.demo.entity.User;
+import com.example.demo.entity.UserInfo;
 import com.example.demo.form.UserEditForm;
 import com.example.demo.service.UserEditService;
 import com.github.dozermapper.core.Mapper;
@@ -52,7 +52,7 @@ public class UserEditController {
 	}
 	
 	
-	private void setupCommonInfo(Model model, User user) {
+	private void setupCommonInfo(Model model, UserInfo user) {
 		model.addAttribute("userEditForm", mapper.map(user, UserEditForm.class));
 		model.addAttribute("userEdit", mapper.map(user, UserEdit.class));
 		

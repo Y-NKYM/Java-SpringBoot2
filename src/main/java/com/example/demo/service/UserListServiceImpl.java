@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.constant.UserDeleteResult;
 import com.example.demo.dto.UserList;
 import com.example.demo.dto.UserSearch;
-import com.example.demo.entity.User;
+import com.example.demo.entity.UserInfo;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.util.AppUtil;
 import com.github.dozermapper.core.Mapper;
@@ -61,9 +61,9 @@ public class UserListServiceImpl implements UserListService {
 	 * @param users 全ユーザー情報EntityのList
 	 * @return 全ユーザー一覧情報DTOのList
 	 */
-	private List<UserList> toUserLists(List<User> users){
+	private List<UserList> toUserLists(List<UserInfo> users){
 		var userLists = new ArrayList<UserList>();
-		for(User user: users) {
+		for(UserInfo user: users) {
 			var userList = mapper.map(user, UserList.class);
 			userList.setUserStatusKind(user.getUserStatusKind().getDisplayValue());
 			userList.setAuthorityKind(user.getAuthorityKind().getDisplayValue());
@@ -78,7 +78,7 @@ public class UserListServiceImpl implements UserListService {
 	 * @param UserEntity 検索条件データ
 	 * @return DBからの結果を持つUserEntityの集まり
 	 */
-	private List<User> findUserByParam(UserSearch dto){
+	private List<UserInfo> findUserByParam(UserSearch dto){
 		var loginIdParam = AppUtil.addWildcard(dto.getLoginId());
 		if(dto.getUserStatusKind()!=null && dto.getAuthorityKind()!= null) {
 			return repository.findByLoginIdLikeAndUserStatusKindAndAuthorityKind(loginIdParam, dto.getUserStatusKind(), dto.getAuthorityKind());

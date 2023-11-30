@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import java.util.Optional;
 
-import com.example.demo.entity.User;
+import com.example.demo.entity.UserInfo;
 
 public interface UserEditService {
 	
@@ -11,6 +11,6 @@ public interface UserEditService {
 	 * @param loginId ユーザーのID
 	 * @return 該当するユーザーの登録情報
 	 */
-	public Optional<User> searchUser(String loginId);
+	public Optional<UserInfo> searchUser(String loginId);
 	
 }

@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserInfo {
 	@Id  //Primary keyに必要
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -57,15 +57,15 @@ public class User {
 	@Column(name="update_time")
 	private LocalDateTime updateTime;
 	
-	public User incrementLoginFailureCount() {
-		return new User(loginId, email, password, userStatusKind, ++loginFailureCount, accountLockedTime, authorityKind, createTime, updateTime);
+	public UserInfo incrementLoginFailureCount() {
+		return new UserInfo(loginId, email, password, userStatusKind, ++loginFailureCount, accountLockedTime, authorityKind, createTime, updateTime);
 	}
 	
-	public User resetLoginFailureInfo() {
-		return new User(loginId, email, password, userStatusKind, 0, null, authorityKind, createTime, updateTime);
+	public UserInfo resetLoginFailureInfo() {
+		return new UserInfo(loginId, email, password, userStatusKind, 0, null, authorityKind, createTime, updateTime);
 	}
 	
-	public User updateAccountLocked() {
-		return new User(loginId, email, password, userStatusKind, 0, LocalDateTime.now(), authorityKind, createTime, updateTime);
+	public UserInfo updateAccountLocked() {
+		return new UserInfo(loginId, email, password, userStatusKind, 0, LocalDateTime.now(), authorityKind, createTime, updateTime);
 	}
 }

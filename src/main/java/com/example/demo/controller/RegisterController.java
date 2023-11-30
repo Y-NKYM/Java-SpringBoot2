@@ -15,7 +15,7 @@ import com.example.demo.constant.AlertMessage;
 import com.example.demo.constant.MessageConst;
 import com.example.demo.constant.UrlConst;
 import com.example.demo.constant.ViewNameConst;
-import com.example.demo.entity.User;
+import com.example.demo.entity.UserInfo;
 import com.example.demo.form.RegisterForm;
 import com.example.demo.service.RegisterService;
 import com.example.demo.util.AppUtil;
@@ -91,7 +91,7 @@ public class RegisterController {
 	 * @param user もしくは Empty
 	 * @return
 	 */
-	private AlertMessage chooseMessageKey(Optional<User> user) {
+	private AlertMessage chooseMessageKey(Optional<UserInfo> user) {
 		if(user.isEmpty()) {
 			//新規登録できずエラー
 			return AlertMessage.EXISTED_USER;

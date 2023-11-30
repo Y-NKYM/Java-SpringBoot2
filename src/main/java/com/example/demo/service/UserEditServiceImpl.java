@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.User;
+import com.example.demo.entity.UserInfo;
 import com.example.demo.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class UserEditServiceImpl implements UserEditService{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Optional<User> searchUser(String loginId){
+	public Optional<UserInfo> searchUser(String loginId){
 		return repository.findById(loginId);
 	}
 }

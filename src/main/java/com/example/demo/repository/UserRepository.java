@@ -7,13 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.constant.db.AuthorityKind;
 import com.example.demo.constant.db.UserStatusKind;
-import com.example.demo.entity.User;
+import com.example.demo.entity.UserInfo;
 
-public interface UserRepository extends JpaRepository<User, String>{
-	Optional<User> findByEmail(String email);
+public interface UserRepository extends JpaRepository<UserInfo, String>{
+	Optional<UserInfo> findByEmail(String email);
 	
-	List<User> findByLoginIdLike(String loginId);
-	List<User> findByLoginIdLikeAndUserStatusKind(String loginId, UserStatusKind userStatusKind);
-	List<User> findByLoginIdLikeAndAuthorityKind(String loginId, AuthorityKind authorityKind);
-	List<User> findByLoginIdLikeAndUserStatusKindAndAuthorityKind(String loginId, UserStatusKind userStatusKind, AuthorityKind authorityKind);
+	List<UserInfo> findByLoginIdLike(String loginId);
+	List<UserInfo> findByLoginIdLikeAndUserStatusKind(String loginId, UserStatusKind userStatusKind);
+	List<UserInfo> findByLoginIdLikeAndAuthorityKind(String loginId, AuthorityKind authorityKind);
+	List<UserInfo> findByLoginIdLikeAndUserStatusKindAndAuthorityKind(String loginId, UserStatusKind userStatusKind, AuthorityKind authorityKind);
 }
