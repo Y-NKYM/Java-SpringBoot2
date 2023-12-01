@@ -57,15 +57,19 @@ public class UserInfo {
 	@Column(name="update_time")
 	private LocalDateTime updateTime;
 	
+	/** 最終更新ユーザー */
+	@Column(name="update_user")
+	private String updateUser;
+	
 	public UserInfo incrementLoginFailureCount() {
-		return new UserInfo(loginId, email, password, userStatusKind, ++loginFailureCount, accountLockedTime, authorityKind, createTime, updateTime);
+		return new UserInfo(loginId, email, password, userStatusKind, ++loginFailureCount, accountLockedTime, authorityKind, createTime, updateTime, updateUser);
 	}
 	
 	public UserInfo resetLoginFailureInfo() {
-		return new UserInfo(loginId, email, password, userStatusKind, 0, null, authorityKind, createTime, updateTime);
+		return new UserInfo(loginId, email, password, userStatusKind, 0, null, authorityKind, createTime, updateTime, updateUser);
 	}
 	
 	public UserInfo updateAccountLocked() {
-		return new UserInfo(loginId, email, password, userStatusKind, 0, LocalDateTime.now(), authorityKind, createTime, updateTime);
+		return new UserInfo(loginId, email, password, userStatusKind, 0, LocalDateTime.now(), authorityKind, createTime, updateTime, updateUser);
 	}
 }
