@@ -14,4 +14,8 @@ public class MessageConst {
 	/** ユーザー削除 */
 	public static final String USERLIST_DELETE_SUCCEED = "userList.deleteSucceed";
 	public static final String USERLIST_NON_EXISTED_LOGIN_ID = "userList.nonExistedLoginId";
+	
+	/** ユーザー更新 */
+	public static final String USEREDIT_UPDATE_SUCCEED = "userEdit.updateSucceed";
+	public static final String USEREDIT_UPDATE_FAILED = "userEdit.updateFailed";
 }
