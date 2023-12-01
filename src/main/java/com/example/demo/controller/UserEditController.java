@@ -1,20 +1,26 @@
 package com.example.demo.controller;
 
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.constant.SessionKeyConst;
 import com.example.demo.constant.UrlConst;
+import com.example.demo.constant.UserEditMessage;
 import com.example.demo.constant.ViewNameConst;
 import com.example.demo.constant.db.AuthorityKind;
 import com.example.demo.constant.db.UserStatusKind;
 import com.example.demo.dto.UserEdit;
+import com.example.demo.dto.UserUpdate;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.form.UserEditForm;
 import com.example.demo.service.UserEditService;
+import com.example.demo.util.AppUtil;
 import com.github.dozermapper.core.Mapper;
 
 import jakarta.servlet.http.HttpSession;
@@ -48,6 +54,24 @@ public class UserEditController {
 		//編集画面表示に必要な項目の設定
 		setupCommonInfo(model, user.get());
 		
+		return ViewNameConst.USER_EDIT;
+	}
+	
+	@PostMapping(params="update")
+	//「@AuthenticationPrincipal User」よりログインユーザーの情報を取得できる
+	public String updateUser(Model model, UserEditForm form, @AuthenticationPrincipal User user) {
+		//データ更新に必要な情報をUserUpdateDTOにまとめる。
+		var updateDto = mapper.map(form, UserUpdate.class);
+		updateDto.setLoginId((String)session.getAttribute(SessionKeyConst.SELECTED_LOGIN_ID));
+		updateDto.setUpdateUserId(user.getUsername());
+		
+		var updateResult = service.updateUser(updateDto);
+		setupCommonInfo(model, updateResult.getUpdateUser());
+		
+		var updateMessage = updateResult.getUpdateMessage();
+		model.addAttribute("isError", updateMessage == UserEditMessage.FAILED);
+		model.addAttribute("msg", AppUtil.getMessage(messageSource, updateMessage.getMessageId()));
+				
 		return ViewNameConst.USER_EDIT;
 	}
 	
