@@ -66,11 +66,18 @@ public class UserEditController {
 		updateDto.setUpdateUserId(user.getUsername());
 		
 		var updateResult = service.updateUser(updateDto);
-		setupCommonInfo(model, updateResult.getUpdateUser());
-		
 		var updateMessage = updateResult.getUpdateMessage();
 		model.addAttribute("isError", updateMessage == UserEditMessage.FAILED);
 		model.addAttribute("msg", AppUtil.getMessage(messageSource, updateMessage.getMessageId()));
+		
+		//データが更新出来なかった場合、旧データを取得し、エラーメッセージと共に編集画面を表示
+		if(updateMessage == UserEditMessage.FAILED) {
+			var loginId = (String)session.getAttribute(SessionKeyConst.SELECTED_LOGIN_ID);
+			var oldUser = service.searchUser(loginId);
+			setupCommonInfo(model, oldUser.get());
+		}else {
+			setupCommonInfo(model, updateResult.getUpdateUser());
+		}
 				
 		return ViewNameConst.USER_EDIT;
 	}
