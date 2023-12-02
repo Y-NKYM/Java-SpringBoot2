@@ -6,8 +6,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.constant.SessionKeyConst;
 import com.example.demo.constant.UrlConst;
@@ -44,7 +46,13 @@ public class UserEditController {
 	private final MessageSource messageSource;
 	
 	@GetMapping()
-	public String view(Model model, UserEditForm form) throws Exception{
+	public String view(@ModelAttribute("updateFailedMessage") String updateFailedMessage, Model model, UserEditForm form) throws Exception{
+		System.out.println(updateFailedMessage);
+		if(!updateFailedMessage.isEmpty()) {
+			model.addAttribute("isError", true);
+			model.addAttribute("msg", updateFailedMessage);
+		}
+		
 		//セッションに保管したloginIdの情報を取得
 		var loginId = (String)session.getAttribute(SessionKeyConst.SELECTED_LOGIN_ID);
 		var user = service.searchUser(loginId);
@@ -60,7 +68,7 @@ public class UserEditController {
 	
 	@PostMapping(params="update")
 	//「@AuthenticationPrincipal User」よりログインユーザーの情報を取得できる
-	public String updateUser(Model model, UserEditForm form, @AuthenticationPrincipal User user) {
+	public String updateUser(RedirectAttributes redirectAttributes, Model model, UserEditForm form, @AuthenticationPrincipal User user) {
 		//データ更新に必要な情報をUserUpdateDTOにまとめる。
 		var updateDto = mapper.map(form, UserUpdate.class);
 		updateDto.setLoginId((String)session.getAttribute(SessionKeyConst.SELECTED_LOGIN_ID));
@@ -73,9 +81,9 @@ public class UserEditController {
 		
 		//データが更新出来なかった場合、旧データを取得し、エラーメッセージと共に編集画面を表示
 		if(updateMessage == UserEditMessage.FAILED) {
-			var loginId = (String)session.getAttribute(SessionKeyConst.SELECTED_LOGIN_ID);
-			var oldUser = service.searchUser(loginId);
-			setupCommonInfo(model, oldUser.get());
+			//エラーメッセージを送ってUserEditページをリダイレクト。
+			redirectAttributes.addFlashAttribute("updateFailedMessage", AppUtil.getMessage(messageSource, updateMessage.getMessageId()));
+			return "redirect:/userEdit";
 		}else {
 			setupCommonInfo(model, updateResult.getUpdateUser());
 		}
