@@ -49,7 +49,8 @@ public class UserEditController {
 		var loginId = (String)session.getAttribute(SessionKeyConst.SELECTED_LOGIN_ID);
 		var user = service.searchUser(loginId);
 		if(user.isEmpty()) {
-			throw new Exception("ログインIDに該当するユーザー情報が見つかりません");
+			return ViewNameConst.USER_EDIT_ERROR;
+			//throw new Exception("ログインIDに該当するユーザー情報が見つかりません");
 		}
 		//編集画面表示に必要な項目の設定
 		setupCommonInfo(model, user.get());

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<div th:replace="~{partial/head::head}"></div>
+	<title>エラー</title>
+	<script type="text/javascript" th:src="@{/js/userList.js}"></script>
+</head>
+<body>
+	<div>
+		<p>エラーが発生しました。前の画面に戻って操作をやり直してください。</p>
+	</div>
+	<a th:href="@{/userList}">前の画面に戻る</a>
+</body>
+</html>
